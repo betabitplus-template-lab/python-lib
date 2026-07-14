@@ -1,0 +1,1 @@
+../../../../_components/agent-workflows/python-library/template/.agents/skills/python-library-rules/scripts/check_docs_shape.py

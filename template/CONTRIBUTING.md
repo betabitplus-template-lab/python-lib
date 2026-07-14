@@ -1,0 +1,1 @@
+_components/repo-shell/contributing-guide/template/CONTRIBUTING.md

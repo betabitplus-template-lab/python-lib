@@ -1,0 +1,1 @@
+../../../../_components/python/tests-surface/template/tests/[[[ package_name ]]]/e2e/public_boundary/test_public_config_pipeline.py
