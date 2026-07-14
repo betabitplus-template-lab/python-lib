@@ -1,1 +1,0 @@
-../../../_components/python/tests-surface/template/tests/[[[ package_name ]]]/unit/__init__.py
