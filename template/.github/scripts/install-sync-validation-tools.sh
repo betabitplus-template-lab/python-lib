@@ -1,0 +1,1 @@
+[[% include "_components/repo-shell/template-sync/template/.github/scripts/install-sync-validation-tools.sh" %]]

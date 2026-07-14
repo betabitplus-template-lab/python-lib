@@ -1,0 +1,1 @@
+[[% include "_components/repo-shell/dev-environment/template/scripts/env/doctor.sh" %]]

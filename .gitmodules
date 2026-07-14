@@ -1,0 +1,4 @@
+[submodule "template/_components"]
+	path = template/_components
+	url = https://github.com/betabitplus-template-lab/components.git
+	branch = main
