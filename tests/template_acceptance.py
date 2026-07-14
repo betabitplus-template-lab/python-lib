@@ -46,10 +46,12 @@ def main() -> None:
         else:
             assert path.is_file() and not path.is_symlink(), rel
             source = (ROOT / info["source"]).resolve(strict=True)
-            assert executable(path) == bool(info["executable"]), rel
+            if os.name != "nt":
+                assert executable(path) == bool(info["executable"]), rel
         assert source.is_relative_to(components_root), f"outside submodule: {rel}"
         assert source.is_file(), f"missing component source: {rel}"
-        assert executable(source) == bool(info["executable"]), rel
+        if os.name != "nt":
+            assert executable(source) == bool(info["executable"]), rel
 
     with tempfile.TemporaryDirectory() as td:
         out = Path(td) / "generated"
