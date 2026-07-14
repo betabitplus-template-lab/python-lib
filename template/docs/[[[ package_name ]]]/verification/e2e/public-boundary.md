@@ -1,0 +1,1 @@
+../../../../_components/python/docs-surface/template/docs/[[[ package_name ]]]/verification/e2e/public-boundary.md

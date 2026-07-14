@@ -1,0 +1,1 @@
+../../_components/repo-shell/dev-environment/template/scripts/env/setup.sh

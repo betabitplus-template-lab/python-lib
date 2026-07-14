@@ -1,0 +1,1 @@
+../../../../../_components/agent-workflows/python-library/template/.agents/skills/python-library-rules/scripts/docs/principles_doc_template.py
