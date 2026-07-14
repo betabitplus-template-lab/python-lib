@@ -1,0 +1,103 @@
+# CI Pipeline
+# Thin generated orchestration over reusable starter-owned CI workflows.
+# Self-hosted runners and App credentials are used only for trusted same-repo
+# events. Fork pull requests run the baseline on GitHub-hosted infrastructure.
+
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [main, dev]
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  baseline:
+    name: Baseline Repo Verification
+    uses: ./.github/workflows/python-lib-ci-baseline.yml
+    with:
+      python-version: "3.13"
+    secrets: inherit
+
+  package:
+    name: Package Verification
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    uses: ./.github/workflows/python-lib-ci-package.yml
+    with:
+      python-version: "3.13"
+    secrets: inherit
+
+  e2e-slices:
+    name: E2E Slice (${{ matrix.name }})
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    uses: ./.github/workflows/python-lib-ci-e2e-slice.yml
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+[[% for slice in e2e_slices %]]
+          - name: [[[ slice.name ]]]
+            path: [[[ slice.path|replace('__PACKAGE_NAME__', package_name) ]]]
+[[% endfor %]]
+    with:
+      python-version: "3.13"
+      e2e-path: ${{ matrix.path }}
+      playwright-browsers: "[[[ ci_playwright_browsers|join(' ') ]]]"
+    secrets: inherit
+
+  merge-gate:
+    name: ci/merge-gate
+    runs-on: ${{ github.event.repository.private != true && 'ubuntu-latest' || github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && 'ubuntu-latest' || fromJSON(vars.CI_RUNNER_LABELS_JSON || '["ubuntu-latest"]') }}
+    needs:
+      - baseline
+      - package
+      - e2e-slices
+    if: ${{ always() }}
+    permissions:
+      contents: read
+
+    steps:
+      - name: Enforce source policy and require applicable CI jobs to pass
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_BRANCH: ${{ github.base_ref }}
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPOSITORY: ${{ github.repository }}
+          HEAD_BRANCH: ${{ github.head_ref }}
+          BASELINE_RESULT: ${{ needs.baseline.result }}
+          PACKAGE_RESULT: ${{ needs.package.result }}
+          E2E_RESULT: ${{ needs['e2e-slices'].result }}
+        run: |
+          set -euo pipefail
+
+          if [ "${EVENT_NAME}" = pull_request ] && [ "${BASE_BRANCH}" = main ]; then
+            if [ "${HEAD_REPOSITORY}" != "${BASE_REPOSITORY}" ] || [ "${HEAD_BRANCH}" != dev ]; then
+              echo "Only the same repository's dev branch may open pull requests to main." >&2
+              exit 1
+            fi
+          fi
+
+          if [ "${BASELINE_RESULT}" != success ]; then
+            echo "Baseline result: ${BASELINE_RESULT}" >&2
+            exit 1
+          fi
+
+          if [ "${EVENT_NAME}" = pull_request ] && [ "${HEAD_REPOSITORY}" != "${BASE_REPOSITORY}" ]; then
+            [ "${PACKAGE_RESULT}" = skipped ] && [ "${E2E_RESULT}" = skipped ] || {
+              echo "Fork PR must not run package or e2e jobs." >&2
+              exit 1
+            }
+            exit 0
+          fi
+
+          if [ "${PACKAGE_RESULT}" != success ] || [ "${E2E_RESULT}" != success ]; then
+            printf 'CI job results: baseline=%s package=%s e2e-slices=%s\n' \
+              "${BASELINE_RESULT}" "${PACKAGE_RESULT}" "${E2E_RESULT}" >&2
+            exit 1
+          fi
