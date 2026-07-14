@@ -1,1 +1,0 @@
-../_components/repo-shell/dev-environment/template/.devcontainer/Dockerfile

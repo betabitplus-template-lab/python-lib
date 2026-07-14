@@ -1,1 +1,0 @@
-_components/common-project/changelog-bootstrap/template/CHANGELOG.md

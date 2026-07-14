@@ -1,1 +1,0 @@
-../../../_components/agent-workflows/core/template/.agents/skills/finish-worktree/SKILL.md
