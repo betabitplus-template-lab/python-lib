@@ -9,6 +9,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+REMOVED_LEGACY_PATHS = {".github/workflows/sync-starter-template.yml"}
 
 
 def run(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -31,6 +32,9 @@ def main() -> None:
     components_root = (ROOT / "template" / "_components").resolve(strict=True)
     for rel, info in wiring.items():
         path = ROOT / "template" / rel
+        if rel in REMOVED_LEGACY_PATHS:
+            assert not path.exists() and not path.is_symlink(), rel
+            continue
         kind = info["type"]
         if kind == "file-symlink":
             assert path.is_symlink(), f"not a symlink: {rel}"
@@ -48,6 +52,8 @@ def main() -> None:
         run("copier", "copy", "--defaults", "--vcs-ref", "HEAD", str(ROOT), str(out))
         assert (out / ".copier-answers.yml").is_file()
         assert not (out / "_components").exists()
+        for rel in REMOVED_LEGACY_PATHS:
+            assert not (out / rel).exists()
         for file in out.rglob("*"):
             if not file.is_file():
                 continue
@@ -61,7 +67,9 @@ def main() -> None:
                 and "\n>>>>>>> " in text
             ), file
         executable_outputs = [
-            rel for rel, info in wiring.items() if info["executable"]
+            rel
+            for rel, info in wiring.items()
+            if info["executable"] and rel not in REMOVED_LEGACY_PATHS
         ]
         if executable_outputs and os.name != "nt":
             assert executable(out / executable_outputs[0]), executable_outputs[0]
@@ -70,6 +78,7 @@ def main() -> None:
                 {
                     "repository": ROOT.name,
                     "wiring_files": len(wiring),
+                    "removed_legacy_paths": sorted(REMOVED_LEGACY_PATHS),
                     "rendered_files": sum(
                         1 for path in out.rglob("*") if path.is_file()
                     ),
