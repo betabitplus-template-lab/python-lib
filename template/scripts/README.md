@@ -1,1 +1,0 @@
-../_components/repo-shell/scripts/template/scripts/README.md
