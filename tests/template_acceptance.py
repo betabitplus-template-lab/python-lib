@@ -37,7 +37,7 @@ def main() -> None:
             source = path.resolve(strict=True)
         else:
             assert path.is_file() and not path.is_symlink(), rel
-            source = (ROOT / "template" / info["source"]).resolve(strict=True)
+            source = (ROOT / info["source"]).resolve(strict=True)
             assert executable(path) == bool(info["executable"]), rel
         assert source.is_relative_to(components_root), f"outside submodule: {rel}"
         assert source.is_file(), f"missing component source: {rel}"
