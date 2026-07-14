@@ -1,0 +1,1 @@
+../../../../../_components/agent-workflows/core/template/.agents/skills/plan-internal-from-contract/references/protocol/05-final-state-and-pass-criteria.md

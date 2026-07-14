@@ -1,0 +1,1 @@
+../../../../../_components/agent-workflows/python-library/template/.agents/skills/python-library-rules/references/core/defaults_pattern.md
