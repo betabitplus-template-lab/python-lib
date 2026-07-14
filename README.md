@@ -6,3 +6,4 @@ Isolated Copier template for `python-lib-standard`.
 - components: private Git submodule pinned by exact SHA
 - component-owned files: committed static symlink wiring
 - no production repository is a write target
+- release line: `v0.4.x` validates the Release Please acceptance path
