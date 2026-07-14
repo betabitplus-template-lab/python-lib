@@ -1,1 +1,0 @@
-../../../_components/python/package-surface/template/src/[[[ package_name ]]]/_internal/__init__.py
