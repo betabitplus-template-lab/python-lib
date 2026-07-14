@@ -1,1 +1,0 @@
-../../../../../_components/agent-workflows/python-library/template/.agents/skills/python-library-rules/scripts/docs/vertical_slice_doc_template.py

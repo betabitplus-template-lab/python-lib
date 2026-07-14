@@ -1,1 +1,0 @@
-../_components/python/workbench-surface/template/workbench/__init__.py

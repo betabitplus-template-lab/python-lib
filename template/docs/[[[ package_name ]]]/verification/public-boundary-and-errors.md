@@ -1,1 +1,0 @@
-../../../_components/python/docs-surface/template/docs/[[[ package_name ]]]/verification/public-boundary-and-errors.md

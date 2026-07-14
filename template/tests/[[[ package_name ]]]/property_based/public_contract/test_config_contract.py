@@ -1,1 +1,0 @@
-../../../../_components/python/tests-surface/template/tests/[[[ package_name ]]]/property_based/public_contract/test_config_contract.py
