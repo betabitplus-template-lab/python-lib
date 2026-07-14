@@ -1,0 +1,1 @@
+../../../../_components/python/docs-surface/template/docs/[[[ package_name ]]]/architecture/concepts/public-boundary-and-errors.md
