@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REMOVED_LEGACY_PATHS = {".github/workflows/sync-starter-template.yml"}
+PROFILE_OVERLAY_PATHS = {"renovate.json5"}
 
 
 def run(*args: str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
@@ -35,6 +36,9 @@ def main() -> None:
         if rel in REMOVED_LEGACY_PATHS:
             assert not path.exists() and not path.is_symlink(), rel
             continue
+        if rel in PROFILE_OVERLAY_PATHS:
+            assert path.is_file() and not path.is_symlink(), rel
+            continue
         kind = info["type"]
         if kind == "file-symlink":
             assert path.is_symlink(), f"not a symlink: {rel}"
@@ -54,6 +58,8 @@ def main() -> None:
         assert not (out / "_components").exists()
         for rel in REMOVED_LEGACY_PATHS:
             assert not (out / rel).exists()
+        for rel in PROFILE_OVERLAY_PATHS:
+            assert (out / rel).is_file()
         for file in out.rglob("*"):
             if not file.is_file():
                 continue
@@ -69,7 +75,9 @@ def main() -> None:
         executable_outputs = [
             rel
             for rel, info in wiring.items()
-            if info["executable"] and rel not in REMOVED_LEGACY_PATHS
+            if info["executable"]
+            and rel not in REMOVED_LEGACY_PATHS
+            and rel not in PROFILE_OVERLAY_PATHS
         ]
         if executable_outputs and os.name != "nt":
             assert executable(out / executable_outputs[0]), executable_outputs[0]
@@ -79,6 +87,7 @@ def main() -> None:
                     "repository": ROOT.name,
                     "wiring_files": len(wiring),
                     "removed_legacy_paths": sorted(REMOVED_LEGACY_PATHS),
+                    "profile_overlays": sorted(PROFILE_OVERLAY_PATHS),
                     "rendered_files": sum(
                         1 for path in out.rglob("*") if path.is_file()
                     ),
