@@ -1,0 +1,1 @@
+../../../_components/python/config-surface/template/src/[[[ package_name ]]]/_api/errors.py
