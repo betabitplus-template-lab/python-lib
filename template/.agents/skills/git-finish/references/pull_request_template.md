@@ -1,1 +1,0 @@
-../../../../_components/agent-workflows/core/template/.agents/skills/git-finish/references/pull_request_template.md
