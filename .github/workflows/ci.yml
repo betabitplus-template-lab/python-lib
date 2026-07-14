@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Mint lab app token
         id: app-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
         with:
           app-id: ${{ secrets.LAB_APP_ID }}
           private-key: ${{ secrets.LAB_APP_PRIVATE_KEY }}
@@ -23,7 +23,7 @@ jobs:
       - name: Enable symlink checkout
         shell: bash
         run: git config --global core.symlinks true
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
           submodules: recursive
@@ -33,7 +33,7 @@ jobs:
         env:
           LAB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: git config --global url."https://x-access-token:${LAB_TOKEN}@github.com/".insteadOf "https://github.com/"
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.13"
       - name: Install pinned Copier
@@ -46,7 +46,7 @@ jobs:
           python tests/template_acceptance.py 2>&1 | tee acceptance.log
       - name: Upload acceptance diagnostics on failure
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: acceptance-${{ matrix.os }}
           path: acceptance.log
