@@ -1,0 +1,1 @@
+../../_components/python/examples-surface/template/examples/[[[ package_name ]]]/config_demo.py

@@ -1,0 +1,1 @@
+../_components/repo-shell/github-repository/template/.github/MAINTAINER_SETUP.md
