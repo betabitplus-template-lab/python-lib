@@ -1,7 +1,0 @@
-# Spell-check repo-authored text with narrow, reviewable exceptions.
-
-[files]
-extend-exclude = [
-  # Lockfile; dependency validation owns this file.
-  "uv.lock",
-]

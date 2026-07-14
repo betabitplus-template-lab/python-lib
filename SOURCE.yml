@@ -1,6 +1,0 @@
-source_repository: betabitplus/py-lib-starter
-source_ref: d59582375855cff69fb165e467dc5847bc75ca99
-source_path: template-builds/python-lib-standard
-manifest_path: template-manifests/python-lib-standard/manifest.yml
-components_repository: betabitplus-template-lab/components
-components_ref: 1f233492f3f66fdf17096cdb9462e4d38a04e8fc
