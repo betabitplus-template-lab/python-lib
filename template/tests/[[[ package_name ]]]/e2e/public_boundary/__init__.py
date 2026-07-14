@@ -1,1 +1,0 @@
-../../../../_components/python/tests-surface/template/tests/[[[ package_name ]]]/e2e/public_boundary/__init__.py

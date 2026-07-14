@@ -1,1 +1,0 @@
-../../../../../_components/agent-workflows/core/template/.agents/skills/plan-internal-from-contract/references/protocol/06-implementation-boundaries.md

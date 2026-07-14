@@ -1,1 +1,0 @@
-../../_components/python/tests-surface/template/tests/[[[ package_name ]]]/conftest.py
