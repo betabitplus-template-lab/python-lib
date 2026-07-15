@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/betabitplus-template-lab/python-lib/compare/v0.4.2...v0.4.3) (2026-07-15)
+
+
+### Bug Fixes
+
+* publish K03 component remediation ([#21](https://github.com/betabitplus-template-lab/python-lib/issues/21)) ([27828b4](https://github.com/betabitplus-template-lab/python-lib/commit/27828b42b400e9d4d71a710d5e6f2bf8ed4275b3))
+
 ## [0.4.2](https://github.com/betabitplus-template-lab/python-lib/compare/v0.4.1...v0.4.2) (2026-07-15)
 
 
