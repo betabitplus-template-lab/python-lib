@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/betabitplus-template-lab/python-lib/compare/v0.4.0...v0.4.1) (2026-07-15)
+
+
+### Bug Fixes
+
+* **deps:** update generated setuptools requirement ([ba5fe7d](https://github.com/betabitplus-template-lab/python-lib/commit/ba5fe7dbf50d69e8e10cf217e28653c186cec50e))
+
 ## [0.4.0](https://github.com/betabitplus-template-lab/python-lib/compare/v0.3.0...v0.4.0) (2026-07-14)
 
 
