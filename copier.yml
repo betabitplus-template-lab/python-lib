@@ -17,12 +17,12 @@ _envops:
   trim_blocks: true
   lstrip_blocks: true
 _skip_if_exists:
-  - "[[[ 'src/**' if template_profile == 'python-lib-standard' else '' ]]]"
-  - "[[[ 'tests/**' if template_profile == 'python-lib-standard' else '' ]]]"
-  - "[[[ 'docs/**' if template_profile == 'python-lib-standard' else '' ]]]"
-  - "[[[ 'workbench/**' if template_profile == 'python-lib-standard' else '' ]]]"
-  - "[[[ 'README.md' if template_profile == 'python-lib-standard' else '' ]]]"
-  - "[[[ 'CHANGELOG.md' if template_profile == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'src/**' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'tests/**' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'docs/**' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'workbench/**' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'README.md' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
+  - "[[[ 'CHANGELOG.md' if (template_profile|default('python-lib-standard')) == 'python-lib-standard' else '' ]]]"
 
 template_profile:
   type: str
